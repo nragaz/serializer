@@ -1,0 +1,17 @@
+{
+    "name": "peterjmit/serializer",
+    "authors": [
+        {
+            "name": "Peter Mitchell",
+            "email": "peterjmit@gmail.com"
+        }
+    ],
+    "require": {},
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "Peterjmit\\Serializer\\": "src",
+            "": "example"
+        }
+    }
+}
