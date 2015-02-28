@@ -8,7 +8,7 @@ class EmberDataAdapter implements Adapter
 {
     public function serialize(Resource $resource, array $includesCollections = [])
     {
-        $data[$resource->getKey()] = $resource->serialize();
+        $data = [$resource->getKey() => $resource->serialize()];
 
         foreach ($includesCollections as $includesCollection) {
             $data[$includesCollection->getKey()] = $includesCollection->serialize();

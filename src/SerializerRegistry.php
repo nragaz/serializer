@@ -33,7 +33,7 @@ class SerializerRegistry
 
     public function createResource($item, $name)
     {
-        return new Resource($item, $this->getSerializer($name));
+        return new SingleResource($item, $this->getSerializer($name));
     }
 
     public function createResourceCollection(array $items, $name)
