@@ -5,7 +5,6 @@ namespace Peterjmit\Serializer;
 class IncludesCollector
 {
     private $registry;
-    private $sideloadCollections;
     private $mainResourceClass;
 
     public function __construct(SerializerRegistry $registry)
@@ -16,47 +15,39 @@ class IncludesCollector
     public function collect(Resource $resource)
     {
         $this->mainResourceClass = $resource->getClass();
-        $this->sideloadCollections = [];
 
         $serializer = $resource->getSerializer();
+        $nestedSerializers = $this->registry->resolveNestedSerializers($serializer);
 
-        // Recursively find all sideloading required for this object and nested
-        // objects. Initialize collections for those objects
-        $this->initializeNestedCollections($serializer);
+        if (isset($nestedSerializers[$this->mainResourceClass])) {
+            unset($nestedSerializers[$this->mainResourceClass]);
+        }
+
+        $collections = [];
+        foreach ($nestedSerializers as $class => $nestedSerializer) {
+            $collections[$class] = new ProcessingCollection([], $nestedSerializer);
+        }
 
         // Load direct children of the resource into collections
         if ($resource instanceof Collection) {
             foreach ($resource as $item) {
-                $this->collectDirtyObjects($serializer, $item);
+                $this->collectDirtyObjects($serializer, $item, $collections);
             }
         } else {
-            $this->collectDirtyObjects($serializer, $resource->getObject());
+            $this->collectDirtyObjects($serializer, $resource->unwrap(), $collections);
         }
 
         // Recursively load the tree of nested objects into the collections
-        $this->processCollections();
+        $this->processCollections($collections);
 
         // Return ResourceCollection[] instead of
         // instances of ProcessingCollection
         return array_map(function (ProcessingCollection $collection) {
             return $collection->toResourceCollection();
-        }, $this->sideloadCollections);
+        }, $collections);
     }
 
-    private function initializeNestedCollections(Serializer $serializer)
-    {
-        foreach ($serializer->getIncludes() as $class) {
-            if ($class === $this->mainResourceClass || isset($this->sideloadCollections[$class])) {
-                continue;
-            }
-
-            $serializer = $this->registry->getSerializer($class);
-            $this->sideloadCollections[$class] = new ProcessingCollection([], $serializer);
-            $this->initializeNestedCollections($serializer);
-        }
-    }
-
-    private function collectDirtyObjects(Serializer $serializer, $item)
+    private function collectDirtyObjects(Serializer $serializer, $item, &$collections)
     {
         foreach ($serializer->getIncludes() as $class) {
             if ($class === $this->mainResourceClass) {
@@ -64,23 +55,23 @@ class IncludesCollector
             }
 
             if ($object = $serializer->collectIncludes($item, $class)) {
-                $this->sideloadCollections[$class]->addUnprocessed($object);
+                $collections[$class]->addUnprocessed($object);
             }
         }
     }
 
-    private function processCollections()
+    private function processCollections(&$collections)
     {
-        foreach ($this->sideloadCollections as $collection) {
+        foreach ($collections as $collection) {
             $serializer = $collection->getSerializer();
             foreach ($collection->getUnprocessed() as $object) {
                 $collection->process($object);
-                $this->collectDirtyObjects($serializer, $object);
+                $this->collectDirtyObjects($serializer, $object, $collections);
             }
         }
 
         $remaining = 0;
-        foreach ($this->sideloadCollections as $collection) {
+        foreach ($collections as $collection) {
             $remaining += $collection->countUnprocessed();
         }
 
