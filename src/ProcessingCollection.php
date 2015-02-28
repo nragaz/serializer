@@ -68,6 +68,11 @@ class ProcessingCollection implements Collection
         return new \ArrayIterator($this->unprocessed);
     }
 
+    public function countProcessed()
+    {
+        return count($this->processed);
+    }
+
     private function getIdentifier($object)
     {
         return $this->serializer->getIdentifier($object);

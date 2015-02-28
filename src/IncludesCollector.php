@@ -40,11 +40,14 @@ class IncludesCollector
         // Recursively load the tree of nested objects into the collections
         $this->processCollections($collections);
 
-        // Return ResourceCollection[] instead of
-        // instances of ProcessingCollection
-        return array_map(function (ProcessingCollection $collection) {
-            return $collection->toResourceCollection();
-        }, $collections);
+        $resourceCollections = [];
+        foreach($collections as $collection) {
+            if ($collection->countProcessed() > 0) {
+                $resourceCollections[] = $collection->toResourceCollection();
+            }
+        }
+
+        return $resourceCollections;
     }
 
     private function collectDirtyObjects(Serializer $serializer, $item, &$collections)
