@@ -4,12 +4,13 @@ namespace Peterjmit\Serializer;
 
 class ProcessingCollection implements Collection
 {
+    private $serializer;
     private $unprocessed;
     private $processed;
 
-    public function __construct(array $unprocessed = [], Transformer $transformer)
+    public function __construct(array $unprocessed = [], Serializer $serializer)
     {
-        $this->transformer = $transformer;
+        $this->serializer = $serializer;
 
         $this->processed = [];
         $this->unprocessed = [];
@@ -19,9 +20,9 @@ class ProcessingCollection implements Collection
         }
     }
 
-    public function getTransformer()
+    public function getSerializer()
     {
-        return $this->transformer;
+        return $this->serializer;
     }
 
     public function addUnprocessed($object)
@@ -59,7 +60,7 @@ class ProcessingCollection implements Collection
 
     public function toResourceCollection()
     {
-        return new ResourceCollection($this->processed, $this->transformer);
+        return new ResourceCollection($this->processed, $this->serializer);
     }
 
     public function getIterator()
@@ -69,6 +70,6 @@ class ProcessingCollection implements Collection
 
     private function getIdentifier($object)
     {
-        return $this->transformer->getIdentifier($object);
+        return $this->serializer->getIdentifier($object);
     }
 }

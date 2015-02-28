@@ -2,29 +2,37 @@
 
 namespace Peterjmit\Serializer;
 
-class ResourceCollection extends Resource implements Collection
+class ResourceCollection implements Collection, Resource, \IteratorAggregate
 {
-    public function __construct(array $elements = [], Transformer $transformer)
+    private $elements;
+    private $serializer;
+
+    public function __construct(array $elements = [], Serializer $serializer)
     {
         $this->elements = $elements;
-        $this->transformer = $transformer;
+        $this->serializer = $serializer;
     }
 
-    public function getTransformer()
+    public function getClass()
     {
-        return $this->transformer;
+        return $this->serializer->getClass();
+    }
+
+    public function getSerializer()
+    {
+        return $this->serializer;
     }
 
     public function getKey()
     {
-        return $this->transformer->getPluralKey();
+        return $this->serializer->getPluralKey();
     }
 
-    public function transform()
+    public function serialize()
     {
         $serialized = [];
         foreach ($this->elements as $element) {
-            $serialized[] = $this->transformer->transform($element);
+            $serialized[] = $this->serializer->serialize($element);
         }
 
         return $serialized;
@@ -33,5 +41,10 @@ class ResourceCollection extends Resource implements Collection
     public function getIterator()
     {
         return new \ArrayIterator($this->elements);
+    }
+
+    public function unwrap()
+    {
+        return $this->elements;
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Peterjmit\Serializer;
 
-interface Collection extends \IteratorAggregate
+interface Collection
 {
-    public function getTransformer();
+    public function getSerializer();
 }
