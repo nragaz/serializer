@@ -8,8 +8,7 @@ interface Serializer
     public function serialize($item);
     public function getKey();
     public function getPluralKey();
-    public function getClass();
+    public function getName();
     public function getIncludes();
-    public function collectIncludes($item, $class);
-    public function supportsClass($item);
+    public function collectIncludes($item, $name);
 }

@@ -8,36 +8,36 @@ class SerializerRegistry
 
     public function register(Serializer $serializer)
     {
-        $this->serializers[$serializer->getClass()] = $serializer;
+        $this->serializers[$serializer->getName()] = $serializer;
     }
 
-    public function getSerializer($class)
+    public function getSerializer($name)
     {
-        return $this->serializers[$class];
+        return $this->serializers[$name];
     }
 
     public function resolveNestedSerializers(Serializer $serializer, array &$serializers = [])
     {
-        foreach ($serializer->getIncludes() as $class) {
-            if (isset($serializers[$class])) {
+        foreach ($serializer->getIncludes() as $name) {
+            if (isset($serializers[$name])) {
                 continue;
             }
 
-            $serializers[$class] = $this->getSerializer($class);
+            $serializers[$name] = $this->getSerializer($name);
 
-            return $this->resolveNestedSerializers($serializers[$class], $serializers);
+            return $this->resolveNestedSerializers($serializers[$name], $serializers);
         }
 
         return $serializers;
     }
 
-    public function createResource($object)
+    public function createResource($item, $name)
     {
-        return new Resource($object, $this->getSerializer(get_class($object)));
+        return new Resource($item, $this->getSerializer($name));
     }
 
-    public function createResourceCollection(array $objects, $class = null)
+    public function createResourceCollection(array $items, $name)
     {
-        return new ResourceCollection($objects, $this->getSerializer($class ?: get_class($objects[0])));
+        return new ResourceCollection($items, $this->getSerializer($name));
     }
 }

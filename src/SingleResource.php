@@ -13,9 +13,9 @@ class SingleResource implements Resource
         $this->serializer = $serializer;
     }
 
-    public function getClass()
+    public function getName()
     {
-        return $this->serializer->getClass();
+        return $this->serializer->getName();
     }
 
     public function unwrap()

@@ -13,9 +13,9 @@ class ResourceCollection implements Collection, Resource, \IteratorAggregate
         $this->serializer = $serializer;
     }
 
-    public function getClass()
+    public function getName()
     {
-        return $this->serializer->getClass();
+        return $this->serializer->getName();
     }
 
     public function getSerializer()

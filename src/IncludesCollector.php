@@ -5,7 +5,7 @@ namespace Peterjmit\Serializer;
 class IncludesCollector
 {
     private $registry;
-    private $mainResourceClass;
+    private $mainResourceName;
 
     public function __construct(SerializerRegistry $registry)
     {
@@ -14,27 +14,27 @@ class IncludesCollector
 
     public function collect(Resource $resource)
     {
-        $this->mainResourceClass = $resource->getClass();
+        $this->mainResourceName = $resource->getName();
 
         $serializer = $resource->getSerializer();
         $nestedSerializers = $this->registry->resolveNestedSerializers($serializer);
 
-        if (isset($nestedSerializers[$this->mainResourceClass])) {
-            unset($nestedSerializers[$this->mainResourceClass]);
+        if (isset($nestedSerializers[$this->mainResourceName])) {
+            unset($nestedSerializers[$this->mainResourceName]);
         }
 
         $collections = [];
-        foreach ($nestedSerializers as $class => $nestedSerializer) {
-            $collections[$class] = new ProcessingCollection([], $nestedSerializer);
+        foreach ($nestedSerializers as $name => $nestedSerializer) {
+            $collections[$name] = new ProcessingCollection([], $nestedSerializer);
         }
 
         // Load direct children of the resource into collections
         if ($resource instanceof Collection) {
             foreach ($resource as $item) {
-                $this->collectDirtyObjects($serializer, $item, $collections);
+                $this->collectDirtyItems($serializer, $item, $collections);
             }
         } else {
-            $this->collectDirtyObjects($serializer, $resource->unwrap(), $collections);
+            $this->collectDirtyItems($serializer, $resource->unwrap(), $collections);
         }
 
         // Recursively load the tree of nested objects into the collections
@@ -50,15 +50,15 @@ class IncludesCollector
         return $resourceCollections;
     }
 
-    private function collectDirtyObjects(Serializer $serializer, $item, &$collections)
+    private function collectDirtyItems(Serializer $serializer, $item, &$collections)
     {
-        foreach ($serializer->getIncludes() as $class) {
-            if ($class === $this->mainResourceClass) {
+        foreach ($serializer->getIncludes() as $name) {
+            if ($name === $this->mainResourceName) {
                 continue;
             }
 
-            if ($object = $serializer->collectIncludes($item, $class)) {
-                $collections[$class]->addUnprocessed($object);
+            if ($item = $serializer->collectIncludes($item, $name)) {
+                $collections[$name]->addUnprocessed($item);
             }
         }
     }
@@ -67,9 +67,9 @@ class IncludesCollector
     {
         foreach ($collections as $collection) {
             $serializer = $collection->getSerializer();
-            foreach ($collection->getUnprocessed() as $object) {
-                $collection->process($object);
-                $this->collectDirtyObjects($serializer, $object, $collections);
+            foreach ($collection->getUnprocessed() as $item) {
+                $collection->process($item);
+                $this->collectDirtyItems($serializer, $item, $collections);
             }
         }
 

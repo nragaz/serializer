@@ -4,7 +4,7 @@ namespace Peterjmit\Serializer;
 
 interface Resource
 {
-    public function getClass();
+    public function getName();
 
     public function unwrap();
 

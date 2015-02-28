@@ -15,8 +15,8 @@ class ProcessingCollection implements Collection
         $this->processed = [];
         $this->unprocessed = [];
 
-        foreach ($unprocessed as $object) {
-            $this->addUnprocessed($object);
+        foreach ($unprocessed as $item) {
+            $this->addUnprocessed($item);
         }
     }
 
@@ -25,22 +25,22 @@ class ProcessingCollection implements Collection
         return $this->serializer;
     }
 
-    public function addUnprocessed($object)
+    public function addUnprocessed($item)
     {
-        $id = $this->getIdentifier($object);
+        $id = $this->getIdentifier($item);
 
         if (!$this->isProcessed($id)) {
-            $this->unprocessed[$id] = $object;
+            $this->unprocessed[$id] = $item;
         }
     }
 
-    public function process($object)
+    public function process($item)
     {
-        $id = $this->getIdentifier($object);
+        $id = $this->getIdentifier($item);
 
         unset($this->unprocessed[$id]);
 
-        $this->processed[$id] = $object;
+        $this->processed[$id] = $item;
     }
 
     public function getUnprocessed()
@@ -73,8 +73,8 @@ class ProcessingCollection implements Collection
         return count($this->processed);
     }
 
-    private function getIdentifier($object)
+    private function getIdentifier($item)
     {
-        return $this->serializer->getIdentifier($object);
+        return $this->serializer->getIdentifier($item);
     }
 }
