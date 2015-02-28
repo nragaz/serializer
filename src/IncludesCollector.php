@@ -79,7 +79,7 @@ class IncludesCollector
         }
 
         if ($remaining > 0) {
-            $this->processCollections();
+            $this->processCollections($collections);
         }
     }
 }
