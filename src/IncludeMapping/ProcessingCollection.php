@@ -1,23 +1,21 @@
 <?php
 
-namespace Peterjmit\Serializer;
+namespace Peterjmit\Serializer\IncludeMapping;
 
-class ProcessingCollection implements Collection
+use Peterjmit\Serializer\Serializer;
+use Peterjmit\Serializer\ResourceCollection;
+
+class ProcessingCollection
 {
     private $serializer;
     private $unprocessed;
     private $processed;
 
-    public function __construct(array $unprocessed = [], Serializer $serializer)
+    public function __construct(Serializer $serializer)
     {
         $this->serializer = $serializer;
-
         $this->processed = [];
         $this->unprocessed = [];
-
-        foreach ($unprocessed as $item) {
-            $this->addUnprocessed($item);
-        }
     }
 
     public function getSerializer()
