@@ -15,16 +15,6 @@ class SingleResource implements Resource
         $this->serializer = $serializer;
     }
 
-    public function getName()
-    {
-        return $this->serializer->getName();
-    }
-
-    public function unwrap()
-    {
-        return $this->item;
-    }
-
     public function getKey()
     {
         return $this->serializer->getKey();
@@ -33,6 +23,11 @@ class SingleResource implements Resource
     public function serialize()
     {
         return $this->serializer->serialize($this->item);
+    }
+
+    public function unwrap()
+    {
+        return $this->item;
     }
 
     public function getSerializer()

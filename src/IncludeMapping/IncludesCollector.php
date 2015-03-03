@@ -21,7 +21,7 @@ class IncludesCollector
         $serializer = $resource->getSerializer();
 
         $collections = new ProcessingCollections(
-            $resource->getName(),
+            $serializer->getName(),
             $this->registry->resolveNestedSerializers($serializer)
         );
 

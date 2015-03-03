@@ -15,16 +15,6 @@ class ResourceCollection implements Resource, \IteratorAggregate
         $this->serializer = $serializer;
     }
 
-    public function getName()
-    {
-        return $this->serializer->getName();
-    }
-
-    public function getSerializer()
-    {
-        return $this->serializer;
-    }
-
     public function getKey()
     {
         return $this->serializer->getPluralKey();
@@ -40,13 +30,18 @@ class ResourceCollection implements Resource, \IteratorAggregate
         return $serialized;
     }
 
-    public function getIterator()
+    public function getSerializer()
     {
-        return new \ArrayIterator($this->elements);
+        return $this->serializer;
     }
 
     public function unwrap()
     {
         return $this->elements;
+    }
+
+    public function getIterator()
+    {
+        return new \ArrayIterator($this->elements);
     }
 }
