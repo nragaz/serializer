@@ -50,6 +50,6 @@ class ResourceCollectionSpec extends ObjectBehavior
 
     function it_returns_an_array_iterator()
     {
-        $this->getIterator()->shouldReturnAnInstanceOf(\ArrayIterator::class);
+        $this->getIterator()->shouldReturnAnInstanceOf('ArrayIterator');
     }
 }

@@ -9,8 +9,6 @@ use Peterjmit\Serializer\Adapter\Adapter;
 use Peterjmit\Serializer\IncludeMapping\IncludesCollector;
 use Peterjmit\Serializer\Registry\SerializerRegistry;
 use Peterjmit\Serializer\Resource\Resource;
-use Peterjmit\Serializer\Resource\ResourceCollection;
-use Peterjmit\Serializer\Resource\SingleResource;
 use Peterjmit\Serializer\Serializer;
 
 class ManagerSpec extends ObjectBehavior
@@ -35,7 +33,7 @@ class ManagerSpec extends ObjectBehavior
         $registry->getSerializer('name')->willReturn($serializer);
 
         $this->createResource(new \stdClass, 'name')
-            ->shouldReturnAnInstanceOf(SingleResource::class);
+            ->shouldReturnAnInstanceOf('Peterjmit\Serializer\Resource\SingleResource');
     }
 
     function it_creates_a_resource_collection_from_an_array_of_items(
@@ -45,7 +43,7 @@ class ManagerSpec extends ObjectBehavior
         $registry->getSerializer('name')->willReturn($serializer);
 
         $this->createResourceCollection([new \stdClass, new \stdClass], 'name')
-            ->shouldReturnAnInstanceOf(ResourceCollection::class);
+            ->shouldReturnAnInstanceOf('Peterjmit\Serializer\Resource\ResourceCollection');
     }
 
     function it_serializes_a_resource_with_sideloaded_items(
