@@ -1,10 +1,17 @@
 <?php
 
-namespace Peterjmit\Serializer;
+namespace Peterjmit\Serializer\Registry;
 
-class SerializerRegistry
+class SimpleSerializerRegistry implements SerializerRegistry
 {
     private $serializers;
+
+    public function __construct(array $serializers = [])
+    {
+        foreach ($serializers as $serializer) {
+            $this->register($serializer);
+        }
+    }
 
     public function register(Serializer $serializer)
     {
@@ -31,13 +38,5 @@ class SerializerRegistry
         return $serializers;
     }
 
-    public function createResource($item, $name)
-    {
-        return new Resource\SingleResource($item, $this->getSerializer($name));
-    }
 
-    public function createResourceCollection(array $items, $name)
-    {
-        return new Resource\ResourceCollection($items, $this->getSerializer($name));
-    }
 }
