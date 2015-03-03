@@ -5,7 +5,7 @@ namespace Peterjmit\Serializer\IncludeMapping;
 use Peterjmit\Serializer\IncludeMapping\ProcessingCollections;
 use Peterjmit\Serializer\Resource\ResourceCollection;
 use Peterjmit\Serializer\Resource\Resource;
-use Peterjmit\Serializer\SerializerRegistry;
+use Peterjmit\Serializer\Registry\SerializerRegistry;
 
 class IncludesCollector
 {
