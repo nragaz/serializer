@@ -67,9 +67,7 @@ class ProcessingCollections
     {
         $collections = [];
         foreach ($serializers as $name => $serializer) {
-            if ($name !== $this->resourceName) {
-                $collections[$name] = new ProcessingCollection($serializer);
-            }
+            $collections[$name] = new ProcessingCollection($serializer);
         }
 
         return $collections;

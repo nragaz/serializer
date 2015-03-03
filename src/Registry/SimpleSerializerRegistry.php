@@ -2,6 +2,8 @@
 
 namespace Peterjmit\Serializer\Registry;
 
+use Peterjmit\Serializer\Serializer;
+
 class SimpleSerializerRegistry implements SerializerRegistry
 {
     private $serializers;
@@ -23,20 +25,20 @@ class SimpleSerializerRegistry implements SerializerRegistry
         return $this->serializers[$name];
     }
 
-    public function resolveNestedSerializers(Serializer $serializer, array &$serializers = [])
+    public function resolveNestedSerializers(Serializer $serializer, array &$serializers = [], $rootName = null)
     {
+        $rootName = $rootName ?: $serializer->getName();
+
         foreach ($serializer->getIncludes() as $name) {
-            if (isset($serializers[$name])) {
+            if (isset($serializers[$name]) || $name === $rootName) {
                 continue;
             }
 
             $serializers[$name] = $this->getSerializer($name);
 
-            return $this->resolveNestedSerializers($serializers[$name], $serializers);
+            return $this->resolveNestedSerializers($serializers[$name], $serializers, $rootName);
         }
 
         return $serializers;
     }
-
-
 }
