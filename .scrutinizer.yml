@@ -1,0 +1,14 @@
+imports:
+  - javascript
+  - php
+
+tools:
+  php_code_sniffer:
+    config:
+      standard: PSR2
+
+filter:
+  excluded_paths:
+    - vendor/*
+    - spec/*
+    - test/*
