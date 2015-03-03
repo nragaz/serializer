@@ -10,5 +10,5 @@ interface SerializerRegistry
 
     public function getSerializer($name);
 
-    public function resolveNestedSerializers(Serializer $serializer, array &$serializers);
+    public function resolveNestedSerializers(Serializer $serializer, array &$serializers = []);
 }

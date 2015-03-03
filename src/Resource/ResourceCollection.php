@@ -9,7 +9,7 @@ class ResourceCollection implements Resource, \IteratorAggregate
     private $elements;
     private $serializer;
 
-    public function __construct(array $elements = [], Serializer $serializer)
+    public function __construct(array $elements, Serializer $serializer)
     {
         $this->elements = $elements;
         $this->serializer = $serializer;

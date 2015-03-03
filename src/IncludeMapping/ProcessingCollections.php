@@ -47,7 +47,7 @@ class ProcessingCollections
     public function toResourceCollections()
     {
         $resourceCollections = [];
-        foreach($this->collections as $collection) {
+        foreach ($this->collections as $collection) {
             if ($collection->countProcessed() > 0) {
                 $resourceCollections[] = $collection->toResourceCollection();
             }
