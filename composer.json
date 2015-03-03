@@ -6,7 +6,12 @@
             "email": "peterjmit@gmail.com"
         }
     ],
-    "require": {},
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "require-dev": {
+        "phpspec/phpspec": "~2.1"
+    },
     "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
