@@ -2,9 +2,9 @@
 
 namespace Peterjmit\Serializer\IncludeMapping;
 
-use Peterjmit\Serializer\Collection;
 use Peterjmit\Serializer\IncludeMapping\ProcessingCollections;
-use Peterjmit\Serializer\Resource;
+use Peterjmit\Serializer\Resource\ResourceCollection;
+use Peterjmit\Serializer\Resource\Resource;
 use Peterjmit\Serializer\SerializerRegistry;
 
 class IncludesCollector
@@ -26,7 +26,7 @@ class IncludesCollector
         );
 
         // Load direct children of the resource into collections
-        if ($resource instanceof Collection) {
+        if ($resource instanceof ResourceCollection) {
             foreach ($resource as $item) {
                 $collections->process($serializer, $item);
             }

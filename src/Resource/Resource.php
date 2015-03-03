@@ -1,6 +1,6 @@
 <?php
 
-namespace Peterjmit\Serializer;
+namespace Peterjmit\Serializer\Resource;
 
 interface Resource
 {

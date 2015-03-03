@@ -2,7 +2,7 @@
 
 namespace Peterjmit\Serializer\IncludeMapping;
 
-use Peterjmit\Serializer\Resource;
+use Peterjmit\Serializer\Resource\Resource;
 use Peterjmit\Serializer\Serializer;
 
 class ProcessingCollections

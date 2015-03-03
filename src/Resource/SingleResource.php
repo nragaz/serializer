@@ -1,6 +1,8 @@
 <?php
 
-namespace Peterjmit\Serializer;
+namespace Peterjmit\Serializer\Resource;
+
+use Peterjmit\Serializer\Serializer;
 
 class SingleResource implements Resource
 {

@@ -1,8 +1,10 @@
 <?php
 
-namespace Peterjmit\Serializer;
+namespace Peterjmit\Serializer\Resource;
 
-class ResourceCollection implements Collection, Resource, \IteratorAggregate
+use Peterjmit\Serializer\Serializer;
+
+class ResourceCollection implements Resource, \IteratorAggregate
 {
     private $elements;
     private $serializer;

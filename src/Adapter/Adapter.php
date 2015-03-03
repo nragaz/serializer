@@ -2,7 +2,7 @@
 
 namespace Peterjmit\Serializer\Adapter;
 
-use Peterjmit\Serializer\Resource;
+use Peterjmit\Serializer\Resource\Resource;
 
 interface Adapter
 {

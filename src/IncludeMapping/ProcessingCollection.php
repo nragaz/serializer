@@ -3,7 +3,7 @@
 namespace Peterjmit\Serializer\IncludeMapping;
 
 use Peterjmit\Serializer\Serializer;
-use Peterjmit\Serializer\ResourceCollection;
+use Peterjmit\Serializer\Resource\ResourceCollection;
 
 class ProcessingCollection
 {
