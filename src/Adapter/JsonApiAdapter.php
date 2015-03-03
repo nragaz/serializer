@@ -10,7 +10,10 @@ class JsonApiAdapter implements Adapter
     {
         $data = ['data' => $resource->serialize()];
 
-        $data['linked'] = [];
+        if (count($includesCollections) > 0) {
+            $data['linked'] = [];
+        }
+
         foreach ($includesCollections as $includesCollection) {
             foreach ($includesCollection->serialize() as $row) {
                 $data['linked'][] = $row;
