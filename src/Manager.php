@@ -66,4 +66,9 @@ class Manager
 
         return $this->adapter->serialize($resource, $sideload);
     }
+
+    public function toJson(Resource $resource, $options = 0)
+    {
+        return json_encode($this->serialize($resource), $options);
+    }
 }

@@ -10,13 +10,18 @@
         "php": ">=5.4.0"
     },
     "require-dev": {
-        "phpspec/phpspec": "~2.1"
+        "phpspec/phpspec": "~2.1",
+        "phpunit/phpunit": "~4.0"
     },
     "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
-            "Peterjmit\\Serializer\\": "src",
-            "": "example"
+            "Peterjmit\\Serializer\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Peterjmit\\Serializer\\Test\\": "test"
         }
     }
 }
