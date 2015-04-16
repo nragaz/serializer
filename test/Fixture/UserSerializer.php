@@ -4,7 +4,7 @@ namespace Peterjmit\Serializer\Test\Fixture;
 
 use Peterjmit\Serializer\Serializer;
 
-class AuthorSerializer implements Serializer
+class UserSerializer implements Serializer
 {
     public function getIdentifier($item)
     {
@@ -15,23 +15,14 @@ class AuthorSerializer implements Serializer
     {
         return [
             'id' => $item['id'],
+            'type' => $this->getName(),
             'name' => $item['name'],
         ];
     }
 
-    public function getKey()
-    {
-        return 'author';
-    }
-
-    public function getPluralKey()
-    {
-        return 'authors';
-    }
-
     public function getName()
     {
-        return 'author';
+        return 'user';
     }
 
     public function getIncludes()

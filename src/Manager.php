@@ -28,17 +28,6 @@ class Manager
         $this->adapter = $adapter;
     }
 
-    public static function createEmberData(array $serializers)
-    {
-        $registry = new SimpleSerializerRegistry($serializers);
-
-        return new static(
-            $registry,
-            new IncludesCollector($registry),
-            new EmberDataAdapter()
-        );
-    }
-
     public static function createJsonApi(array $serializers)
     {
         $registry = new SimpleSerializerRegistry($serializers);

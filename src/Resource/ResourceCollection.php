@@ -17,7 +17,7 @@ class ResourceCollection implements Resource, \IteratorAggregate
 
     public function getKey()
     {
-        return $this->serializer->getPluralKey();
+        return $this->serializer->getName();
     }
 
     public function serialize()

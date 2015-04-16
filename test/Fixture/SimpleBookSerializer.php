@@ -15,18 +15,9 @@ class SimpleBookSerializer implements Serializer
     {
         return [
             'id' => $item['id'],
+            'type' => $this->getName(),
             'title' => $item['title'],
         ];
-    }
-
-    public function getKey()
-    {
-        return 'book';
-    }
-
-    public function getPluralKey()
-    {
-        return 'books';
     }
 
     public function getName()

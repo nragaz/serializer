@@ -24,9 +24,9 @@ class ResourceCollectionSpec extends ObjectBehavior
         $this->shouldImplement('IteratorAggregate');
     }
 
-    function it_returns_the_plural_key_from_the_serializer(Serializer $serializer)
+    function it_returns_the_name_from_the_serializer(Serializer $serializer)
     {
-        $serializer->getPluralKey()->willReturn('books');
+        $serializer->getName()->willReturn('books');
 
         $this->getKey()->shouldReturn('books');
     }

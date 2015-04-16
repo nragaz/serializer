@@ -17,10 +17,10 @@ class SingleResource implements Resource
 
     public function getKey()
     {
-        return $this->serializer->getKey();
+        return $this->serializer->getName();
     }
 
-    public function serialize()
+    public function serialize($append = false)
     {
         return $this->serializer->serialize($this->item);
     }

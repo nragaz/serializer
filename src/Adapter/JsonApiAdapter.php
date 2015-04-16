@@ -11,12 +11,12 @@ class JsonApiAdapter implements Adapter
         $data = ['data' => $resource->serialize()];
 
         if (count($includesCollections) > 0) {
-            $data['linked'] = [];
+            $data['included'] = [];
         }
 
         foreach ($includesCollections as $includesCollection) {
             foreach ($includesCollection->serialize() as $row) {
-                $data['linked'][] = $row;
+                $data['included'][] = $row;
             }
         }
 

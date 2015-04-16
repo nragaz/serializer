@@ -15,19 +15,14 @@ class BookWithAuthorSerializer implements Serializer
     {
         return [
             'id' => $item['id'],
+            'type' => $this->getName(),
             'title' => $item['title'],
-            'author' => $item['author']['id'],
+            'links' => [
+                'author' => [
+                    'linkage' => ['type' => 'user', 'id' => $item['author']['id']]
+                ]
+            ]
         ];
-    }
-
-    public function getKey()
-    {
-        return 'book';
-    }
-
-    public function getPluralKey()
-    {
-        return 'books';
     }
 
     public function getName()
@@ -37,13 +32,13 @@ class BookWithAuthorSerializer implements Serializer
 
     public function getIncludes()
     {
-        return ['author'];
+        return ['user'];
     }
 
     public function collectIncludes($item, $name)
     {
         switch ($name) {
-            case 'author':
+            case 'user':
                 return $item['author'];
         }
     }

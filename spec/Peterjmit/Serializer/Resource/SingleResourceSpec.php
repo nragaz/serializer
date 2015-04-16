@@ -19,9 +19,9 @@ class SingleResourceSpec extends ObjectBehavior
         $this->shouldHaveType('Peterjmit\Serializer\Resource\SingleResource');
     }
 
-    function it_returns_the_key_from_the_serializer(Serializer $serializer)
+    function it_returns_the_name_from_the_serializer(Serializer $serializer)
     {
-        $serializer->getKey()->willReturn('book');
+        $serializer->getName()->willReturn('book');
 
         $this->getKey()->shouldReturn('book');
     }

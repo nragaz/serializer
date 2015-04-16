@@ -23,7 +23,7 @@ class JsonApiAdapterSpec extends ObjectBehavior
             ->shouldReturn(['data' => ['id' => 1, 'name' => 'test']]);
     }
 
-    function it_serializes_an_included_resource_under_the_linked_namespace(
+    function it_serializes_an_included_resource_under_the_included_namespace(
         Resource $resource,
         Resource $includedResource
     ) {
@@ -34,7 +34,7 @@ class JsonApiAdapterSpec extends ObjectBehavior
         $this->serialize($resource, [$includedResource])
             ->shouldReturn([
                 'data' => ['id' => 1, 'name' => 'test'],
-                'linked' => [
+                'included' => [
                     ['id' => 2, 'name' => 'test_2']
                 ]
             ]);
