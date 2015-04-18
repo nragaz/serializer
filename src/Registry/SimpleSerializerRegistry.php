@@ -36,7 +36,7 @@ class SimpleSerializerRegistry implements SerializerRegistry
 
             $serializers[$name] = $this->getSerializer($name);
 
-            return $this->resolveNestedSerializers($serializers[$name], $serializers, $rootName);
+            $this->resolveNestedSerializers($serializers[$name], $serializers, $rootName);
         }
 
         return $serializers;
