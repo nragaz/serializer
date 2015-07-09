@@ -23,8 +23,8 @@ class ProcessingCollections
                 continue;
             }
 
-            if ($includedItem = $serializer->collectIncludes($item, $name)) {
-                $this->collections[$name]->addUnprocessed($includedItem);
+            if ($includedItems = $serializer->collectIncludes($item, $name)) {
+                $this->collections[$name]->addManyUnprocessed($includedItems);
             }
         }
     }

@@ -32,6 +32,17 @@ class ProcessingCollection
         }
     }
 
+    public function addManyUnprocessed($items)
+    {
+        if (!$this->isMultiDimensionalArray($items)) {
+            $items = [$items];
+        }
+
+        foreach ($items as $item) {
+            $this->addUnprocessed($item);
+        }
+    }
+
     public function process($item)
     {
         $id = $this->getIdentifier($item);
@@ -74,5 +85,14 @@ class ProcessingCollection
     private function getIdentifier($item)
     {
         return $this->serializer->getIdentifier($item);
+    }
+
+    private function isMultiDimensionalArray(array $arr)
+    {
+        foreach ($arr as $value) {
+            return is_array($value);
+        }
+
+        throw new \UnexpectedValueException('Unexpected empty array');
     }
 }
