@@ -87,9 +87,13 @@ class ProcessingCollection
         return $this->serializer->getIdentifier($item);
     }
 
-    private function isMultiDimensionalArray(array $arr)
+    private function isMultiDimensionalArray($item)
     {
-        foreach ($arr as $value) {
+        if (!is_array($item) || !($item instanceof \Traversable)) {
+            return false;
+        }
+
+        foreach ($item as $value) {
             return is_array($value);
         }
 
