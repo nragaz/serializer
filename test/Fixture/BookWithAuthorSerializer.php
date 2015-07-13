@@ -39,7 +39,7 @@ class BookWithAuthorSerializer implements Serializer
     {
         switch ($name) {
             case 'user':
-                return $item['author'];
+                return [$item['author']];
         }
     }
 }

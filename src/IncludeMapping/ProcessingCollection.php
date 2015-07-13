@@ -34,7 +34,7 @@ class ProcessingCollection
 
     public function addManyUnprocessed($items)
     {
-        if (!$this->isMultiDimensionalArray($items)) {
+        if (!is_array($items)) {
             $items = [$items];
         }
 
@@ -85,18 +85,5 @@ class ProcessingCollection
     private function getIdentifier($item)
     {
         return $this->serializer->getIdentifier($item);
-    }
-
-    private function isMultiDimensionalArray($item)
-    {
-        if (!is_array($item) || !($item instanceof \Traversable)) {
-            return false;
-        }
-
-        foreach ($item as $value) {
-            return is_array($value);
-        }
-
-        throw new \UnexpectedValueException('Unexpected empty array');
     }
 }
